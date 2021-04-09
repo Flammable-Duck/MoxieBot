@@ -1,5 +1,6 @@
 import requests
 import json
+import discord
 
 def search_urban(word):
     "returns the top definiton of a word at urban dictionary"
@@ -11,9 +12,10 @@ def search_urban(word):
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     data = json.loads(response.text)
-    #return json.dumps(data, indent=4, sort_keys=True) #pretty JSON, for debugging
-    definition = data['list'][0]['definition'].replace("\n", "")
-    finalstring = "from the Urban Dictionary:\n\n" + "**" +  word + "**" + "\n" + definition + "\n\n" + "*" + data['list'][0]['example'] + "*"
-    return finalstring
+    ###return json.dumps(data, indent=4, sort_keys=True) #pretty JSON, for debugging
+    #definition = data['list'][0]['definition'].replace("\n", "")
+    #finalstring = "from the Urban Dictionary:\n\n" + "**" +  word + "**" + "\n" + definition + "\n\n" + "*" + data['list'][0]['example'] + "*"
+    return data
 
-#search_urban("test")
+
+#print(search_urban("test"))
