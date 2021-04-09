@@ -5,6 +5,7 @@ import cmds.config
 from cmds.fortune import *
 from cmds.rateme import *
 
+print("starting...")
 # All commands need to go through the bot that gets run()
 bot = commands.Bot(command_prefix='^')
 
@@ -21,23 +22,23 @@ async def uwu(ctx):
 
 @bot.command()
 async def fortune(ctx):
-    "Broken \\n lol"
+    "The classic fortune command"
     await ctx.send(get_fortune())
 
 @bot.command()
 async def r8me(ctx):
-    "Let a random number decide how good you are"
+    "Let Moxie rate you!"
     await ctx.send(rateuser(ctx.message.author.mention))
 
 @bot.group()
 async def config(ctx):
-    "Some config commands and stuff"
+    "Moxie settings"
     if ctx.invoked_subcommand is None:
         await ctx.send("Invalid config command")
 
 @config.command()
 async def list(ctx):
-    "List all configs, their descriptions, and their current values"
+    "List all settings"
     await cmds.config.list_configs(ctx)
 
 @config.command()
