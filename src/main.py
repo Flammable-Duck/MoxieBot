@@ -2,6 +2,7 @@
 import cmds.config
 from cmds.fortune import *
 from cmds.rateme import *
+from cmds.urbansearch import *
 
 from discord.ext import commands
 
@@ -23,6 +24,12 @@ async def on_ready():
 async def uwu(ctx):
     "owo"
     await ctx.send("owo")
+
+@bot.command()
+async def urban(ctx):
+    "search the Urban Dictionary"
+    word = ctx.message.content.split()[1]
+    await ctx.send(search_urban(word))
 
 @bot.command()
 async def fortune(ctx):
@@ -59,7 +66,7 @@ async def set(ctx):
 
 @bot.group()
 async def reddit(ctx):
-    "Reddit neckbeard fedora hat"
+    "Reddit commands"
     if ctx.invoked_subcommand is None:
         await ctx.send("Invalid reddit command")
 
