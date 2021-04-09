@@ -1,12 +1,16 @@
 #!/bin/python3
-from discord.ext import commands
-#import discord.user
 import cmds.config
 from cmds.fortune import *
 from cmds.rateme import *
 
+from discord.ext import commands
+
+import random
+
+import redditapi
+
 print("starting...")
-# All commands need to go through the bot that gets run()
+
 bot = commands.Bot(command_prefix='^')
 
 cmds.config.init()
@@ -52,6 +56,20 @@ async def set(ctx):
     elif value.lower() == "false":
         value = False
     await cmds.config.set_value(ctx, name, value)
+
+@bot.group()
+async def reddit(ctx):
+    "Reddit neckbeard fedora hat"
+    if ctx.invoked_subcommand is None:
+        await ctx.send("Invalid reddit command")
+
+@reddit.command()
+async def hot(ctx):
+    "See a random hot post in a subreddit"
+    posts = await redditapi.get_links(ctx.message.content.split()[2], 10)
+    if len(posts) > 0:
+        post = posts[random.randint(0, len(posts))]
+        await ctx.send(f"{post.title}\n{post.url}")
 
 # yes there are safer ways to do this
 # I just don't care
