@@ -5,7 +5,7 @@ import asyncpraw
 reddit = asyncpraw.Reddit(
     client_id="YXLgxDx5qtQD0Q",
     client_secret="SJEa9_F65OOs4s3b8eDQgoCs-ggAOg",
-    user_agent="python:Moxie Bot:v0.1.0 by u/BubbyRoosh"
+    user_agent="python:Moxie Bot:v0.1.0 by u/BubbyRoosh and u/wf6er6"
 )
 
 class Link:
