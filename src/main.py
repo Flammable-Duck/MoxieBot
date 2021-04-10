@@ -1,14 +1,13 @@
 #!/bin/python3
 import cmds.config
-from cmds.fortune import *
-from cmds.rateme import *
-from cmds.urbansearch import *
+from cmds.fortune import get_fortune
+from cmds.rateme import rateuser
+from cmds.urbansearch import search_urban
+from cmds.xkcd import random_xkcd, latest_xkcd
 
 from discord.ext import commands
 import discord
-
 import random
-
 import redditapi
 
 print("starting...")
@@ -26,6 +25,20 @@ async def on_ready():
 async def uwu(ctx):
     "owo"
     await ctx.send("owo")
+
+@bot.command()
+async def xkcd(ctx):
+    "get a random xkcd"
+    data = random_xkcd()
+    body =""
+    url= "https://xkcd.com/" + str(data['num']) + "/"
+    embed = discord.Embed(title=data["title"], url= url ,
+                          description=body, color=discord.Color.blue())
+    embed.set_footer(text= data["alt"])
+    embed.set_image(url= data["img"])
+    embed.set_author(name="xkcd", url="https://xkcd.com",
+                     icon_url="https://www.explainxkcd.com/wiki/images/thumb/e/e4/xkcdFavicon.png/25px-xkcdFavicon.png")
+    await ctx.send(embed = embed)
 
 @bot.command()
 async def urban(ctx):

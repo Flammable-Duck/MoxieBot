@@ -1,6 +1,5 @@
 import requests
 import json
-import discord
 
 def search_urban(word):
     "returns the top definiton of a word at urban dictionary"
