@@ -13,13 +13,14 @@ import redditapi
 
 print("starting...")
 
-bot = commands.Bot(command_prefix='^')
+bot = commands.Bot(command_prefix='$')
 
 cmds.config.init()
+cmds.config.load(bot)
 
 @bot.event
 async def on_ready():
-    print("MoxieBot, ©2021 BubbyRoosh and Flammable_Duck")
+    print("MoxieBot, © 2021 BubbyRoosh and Flammable_Duck")
 
 @bot.command()
 async def uwu(ctx):
@@ -50,7 +51,7 @@ async def r8me(ctx):
 
 @bot.group()
 async def config(ctx):
-    "Moxie settings"
+    "Moxie settings (none yet)"
     if ctx.invoked_subcommand is None:
         await ctx.send("Invalid config command")
 
@@ -64,12 +65,7 @@ async def set(ctx):
     "Set a config value"
     name = ctx.message.content.split()[2]
     value = ctx.message.content.split()[3]
-    print(f"{name} {value}")
-    if value.lower() == "true":
-        value = True
-    elif value.lower() == "false":
-        value = False
-    await cmds.config.set_value(ctx, name, value)
+    cmds.config.set_value(bot, name, value)
 
 @bot.group()
 async def reddit(ctx):
