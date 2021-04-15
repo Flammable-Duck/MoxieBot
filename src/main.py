@@ -1,5 +1,4 @@
 #!/bin/python3
-import cmds.config
 from cmds.fortune import get_fortune
 from cmds.rateme import rateuser
 from cmds.urbansearch import search_urban
@@ -14,9 +13,6 @@ import redditapi
 print("starting...")
 
 bot = commands.Bot(command_prefix='$')
-
-cmds.config.init()
-cmds.config.load(bot)
 
 @bot.event
 async def on_ready():
@@ -87,24 +83,6 @@ async def fortune(ctx):
 async def r8me(ctx):
     "Let Moxie rate you!"
     await ctx.send(rateuser(ctx.message.author.mention))
-
-@bot.group()
-async def config(ctx):
-    "Moxie settings (none yet)"
-    if ctx.invoked_subcommand is None:
-        await ctx.send("Invalid config command")
-
-@config.command()
-async def list(ctx):
-    "List all settings"
-    await cmds.config.list_configs(ctx)
-
-@config.command()
-async def set(ctx):
-    "Set a config value"
-    name = ctx.message.content.split()[2]
-    value = ctx.message.content.split()[3]
-    cmds.config.set_value(bot, name, value)
 
 @bot.group()
 async def reddit(ctx):
