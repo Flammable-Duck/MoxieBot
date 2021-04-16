@@ -3,13 +3,13 @@ from cmds.fortune import get_fortune
 from cmds.rateme import rateuser
 from cmds.urbansearch import search_urban
 from cmds.xkcd import random_xkcd, latest_xkcd
-from cmds.users import search_user, add_user, user_bal, change_bal
+from cmds.users import search_user, add_user, user_bal, change_bal, top_users
 from cmds.roulette import play_roulette
+import redditapi
 
 from discord.ext import commands
 import discord
 import random
-import redditapi
 
 print("starting...")
 
@@ -18,6 +18,24 @@ bot = commands.Bot(command_prefix='$')
 @bot.event
 async def on_ready():
     print("MoxieBot, © 2021 BubbyRoosh and Flammable Duck")
+
+@bot.command()
+async def bal(ctx):
+    "see a user's coin balance"
+    try:
+        user_uid = int(ctx.message.content.split()[1].replace("!","").replace(">","").replace("<","").replace("@",""))
+    except:
+        user_uid = ctx.message.author.id
+    u2_mention = await bot.fetch_user(user_uid)
+
+    coins = user_bal(user_uid)
+
+    title = str(u2_mention) + "'s Balance:" 
+    body = "**Coins**: ⍟" + str(coins)
+
+    embed = discord.Embed(title=title,
+                          description=body, color=discord.Color.blue())
+    await ctx.send(embed = embed)
 
 @bot.command()
 async def give(ctx):
@@ -37,6 +55,24 @@ async def give(ctx):
             await ctx.send(ctx.message.author.mention + " gave "+ ctx.message.content.split()[1] + " " + str(amount) + " coins!")
 
 @bot.command()
+async def rich(ctx):
+    "see the richest users"
+    title = "Richest Users"
+    search = top_users()
+    body = ""
+    number = 0
+    for user in search:
+        uid, bal = user
+        user_name = await bot.fetch_user(uid)
+        number += 1
+        rank = str(number).replace(
+            "1", ":first_place: ").replace("2", ":second_place: ").replace("3", ":third_place: ").replace("4", ":small_blue_diamond: ").replace("5", ":small_blue_diamond: ")
+        body += rank + "**" + str(bal) + "** - " + str(user_name) + "\n"
+    embed = discord.Embed(title=title,
+                          description=body, color=discord.Color.blue())
+    await ctx.send(embed = embed)
+
+@bot.command()
 async def roulette(ctx):
     "$roulette <amount> <bet>(red, black, green, even, odd, number)"
     amount = int(ctx.message.content.split()[1])
@@ -48,24 +84,6 @@ async def roulette(ctx):
         winnings, result = play_roulette(ctx.message.author.id, bettype, amount)
         change_bal(ctx.message.author.id, int(winnings))
         await ctx.send(result)
-
-@bot.command()
-async def bal(ctx):
-    "see a user's coin balance"
-    try:
-        user_uid = int(ctx.message.content.split()[1].replace("!","").replace(">","").replace("<","").replace("@",""))
-    except:
-        user_uid = ctx.message.author.id
-    u2_mention = await bot.fetch_user(user_uid)
-
-    coins = user_bal(user_uid)
-
-    title = str(u2_mention) + "'s Balance:" 
-    body = "**Coins**: ⍟" + str(coins)
-
-    embed = discord.Embed(title=title,
-                          description=body, color=discord.Color.blue())
-    await ctx.send(embed = embed)
 
 @bot.command(name="1984")
 async def _1984(ctx):

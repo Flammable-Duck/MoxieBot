@@ -7,6 +7,14 @@ import sqlite3
 #     bal interger
 # )""")
 
+def top_users():
+    "returns top 5 users, ordered by wealth"
+    conn = sqlite3.connect('data/users.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM users")
+    users = c.fetchall()
+    users.sort(key=lambda a: a[1], reverse=True)
+    return users[:5]
 
 def search_user(uid):
     "returns a user"
