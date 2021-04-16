@@ -19,7 +19,7 @@ def add_user(uid):
     "adds a new user to the database"
     conn = sqlite3.connect('data/users.db')
     c = conn.cursor()
-    c.execute("INSERT INTO users VALUES (:uid, 0)", {'uid': uid})
+    c.execute("INSERT INTO users VALUES (:uid, 100)", {'uid': uid})
     conn.commit()
     conn.close()
     
@@ -28,8 +28,6 @@ def user_bal(uid):
     if str(search_user(uid)) == "None":
         add_user(uid)
         print("adding new user")
-    else:
-        print("user found")
     _, bal = search_user(uid)
     return bal
 

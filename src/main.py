@@ -4,6 +4,7 @@ from cmds.rateme import rateuser
 from cmds.urbansearch import search_urban
 from cmds.xkcd import random_xkcd, latest_xkcd
 from cmds.users import search_user, add_user, user_bal, change_bal
+from cmds.roulette import play_roulette
 
 from discord.ext import commands
 import discord
@@ -19,8 +20,42 @@ async def on_ready():
     print("MoxieBot, © 2021 BubbyRoosh and Flammable Duck")
 
 @bot.command()
+async def give(ctx):
+    "$give <target> <amount>"
+    user1_uid = int(ctx.message.author.id)
+    user2_uid = int(ctx.message.content.split()[1].replace("!","").replace(">","").replace("<","").replace("@",""))
+    amount = int(ctx.message.content.split()[2])
+    coin_bal = user_bal(ctx.message.author.id)
+    if user1_uid == user2_uid:
+        await ctx.send("You cant give yourself money!")
+    else:
+        if amount > coin_bal:
+            await ctx.send("You dont have enough!")
+        else:
+            change_bal(user1_uid, -amount)
+            change_bal(user2_uid, amount)
+            await ctx.send(ctx.message.author.mention + " gave "+ ctx.message.content.split()[1] + " " + str(amount) + " coins!")
+
+
+@bot.command()
+async def roulette(ctx):
+    "$roulette <amount> <bet>(red, black, green, even, odd, number)"
+    amount = int(ctx.message.content.split()[1])
+    bettype = ctx.message.content.split()[2]
+    coin_bal = user_bal(ctx.message.author.id)
+    if amount > coin_bal:
+        await ctx.send("You dont have enough coins! \n Balance: %s"%coin_bal)
+    else:
+        winnings, result = play_roulette(ctx.message.author.id, bettype, amount)
+        change_bal(ctx.message.author.id, int(winnings))
+        await ctx.send(result)
+
+
+
+
+@bot.command()
 async def bal(ctx):
-    "see your coin balance"
+    "see a user's coin balance"
     coins = user_bal(ctx.message.author.id)
     await ctx.send(ctx.message.author.mention + "\n" + "`coins: %d`"%coins)
 
@@ -83,6 +118,8 @@ async def fortune(ctx):
 async def r8me(ctx):
     "Let Moxie rate you!"
     await ctx.send(rateuser(ctx.message.author.mention))
+
+
 
 @bot.group()
 async def reddit(ctx):
