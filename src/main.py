@@ -36,7 +36,6 @@ async def give(ctx):
             change_bal(user2_uid, amount)
             await ctx.send(ctx.message.author.mention + " gave "+ ctx.message.content.split()[1] + " " + str(amount) + " coins!")
 
-
 @bot.command()
 async def roulette(ctx):
     "$roulette <amount> <bet>(red, black, green, even, odd, number)"
@@ -50,14 +49,23 @@ async def roulette(ctx):
         change_bal(ctx.message.author.id, int(winnings))
         await ctx.send(result)
 
-
-
-
 @bot.command()
 async def bal(ctx):
     "see a user's coin balance"
-    coins = user_bal(ctx.message.author.id)
-    await ctx.send(ctx.message.author.mention + "\n" + "`coins: %d`"%coins)
+    try:
+        user_uid = int(ctx.message.content.split()[1].replace("!","").replace(">","").replace("<","").replace("@",""))
+    except:
+        user_uid = ctx.message.author.id
+    u2_mention = await bot.fetch_user(user_uid)
+
+    coins = user_bal(user_uid)
+
+    title = str(u2_mention) + "'s Balance:" 
+    body = "**Coins**: ⍟" + str(coins)
+
+    embed = discord.Embed(title=title,
+                          description=body, color=discord.Color.blue())
+    await ctx.send(embed = embed)
 
 @bot.command(name="1984")
 async def _1984(ctx):
@@ -118,8 +126,6 @@ async def fortune(ctx):
 async def r8me(ctx):
     "Let Moxie rate you!"
     await ctx.send(rateuser(ctx.message.author.mention))
-
-
 
 @bot.group()
 async def reddit(ctx):
