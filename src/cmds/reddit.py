@@ -15,7 +15,8 @@ class Link:
         self.url = url
         self.title = title
 
-async def get_links(sub, num) -> list[Link]:
+async def get_links(sub, num):
+    "ReTuRnS A LiSt Of ImAgEs FrOm A SeLeCtEd SuBrEdDiT"
     urls = []
     subreddit = await reddit.subreddit(sub)
     async for submission in subreddit.hot(limit=num):

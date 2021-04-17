@@ -1,11 +1,4 @@
 import sqlite3
-# conn = sqlite3.connect('data/users.db')
-# c = conn.cursor()
-
-# c.execute("""CREATE TABLE users(
-#     uid text,
-#     bal interger
-# )""")
 
 def top_users():
     "returns top 5 users, ordered by wealth"
@@ -30,7 +23,7 @@ def add_user(uid):
     c.execute("INSERT INTO users VALUES (:uid, 100)", {'uid': uid})
     conn.commit()
     conn.close()
-    
+
 def user_bal(uid):
     "returns a users balance"
     if str(search_user(uid)) == "None":
@@ -47,13 +40,3 @@ def change_bal(uid, number):
     c.execute("UPDATE users SET bal = :bal WHERE uid = :uid", {'uid': uid, 'bal': new_bal})
     conn.commit()
     conn.close()
-
-# print(search_user("434826300105031683"))
-# print(user_bal("434826300105031683"))
-#change_bal("434826300105031683", 100)
-#print(user_bal("434826300105031683"))
-# print(user_bal("testDelMe"))
-# insert_employee(emp_1)
-# c.execute("SELECT * FROM employees WHERE uid='doe'")
-# conn.commit()
-# conn.close()
