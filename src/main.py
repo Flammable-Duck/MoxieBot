@@ -74,7 +74,8 @@ class Economy(commands.Cog):
         body = ""
         number = 0
         for user in search:
-            uid, bal = user
+            uid = user[0]
+            bal = user[1]
             user_name = await bot.fetch_user(uid)
             number += 1
             rank = str(number).replace(

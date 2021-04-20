@@ -29,7 +29,7 @@ def user_bal(uid):
     if str(search_user(uid)) == "None":
         add_user(uid)
         print("adding new user")
-    _, bal = search_user(uid)
+    bal = search_user(uid)[1]
     return bal
 
 def change_bal(uid, number):
