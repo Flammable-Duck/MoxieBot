@@ -7,6 +7,7 @@ from cmds.users import user_bal, change_bal, top_users
 from cmds.roulette import play_roulette
 from cmds.reddit import get_links
 from cmds.loan import give_player_loan
+from cmds.beg import beg_command
 
 from discord.ext import commands
 import discord
@@ -22,7 +23,7 @@ async def on_ready():
 class Economy(commands.Cog):
     """Economy commands"""
     @commands.command()
-    async def bal(_, ctx):
+    async def bal(self, ctx):
         "see a user's coin balance"
         try:
             user_uid = int(ctx.message.content.split()[1].replace("!","").replace(">","").replace("<","").replace("@",""))
@@ -40,7 +41,7 @@ class Economy(commands.Cog):
         await ctx.send(embed = embed)
 
     @commands.command()
-    async def give(_, ctx):
+    async def give(self, ctx):
         "give <target> <amount>"
         user1_uid = int(ctx.message.author.id)
         user2_uid = int(ctx.message.content.split()[1].replace("!","").replace(">","").replace("<","").replace("@",""))
@@ -56,19 +57,25 @@ class Economy(commands.Cog):
                 change_bal(user2_uid, amount)
                 await ctx.send(ctx.message.author.mention + " gave "+ ctx.message.content.split()[1] + " " + str(amount) + " coins!")
     @commands.command()
-    async def loan(_, ctx):
+    async def beg(self, ctx):
+        "beg for money cuz your broke"
+        await ctx.send(beg_command(ctx.message.author.id))
+
+    @commands.command()
+    async def loan(self, ctx):
         "loan <amount>"
         give_player_loan(0, 0)
 
     @commands.command()
-    async def rich(_, ctx):
+    async def rich(self , ctx):
         "see the richest users"
         title = "Richest Users"
         search = top_users()
         body = ""
         number = 0
         for user in search:
-            uid, bal = user
+            uid = user[0]
+            bal = user[1]
             user_name = await bot.fetch_user(uid)
             number += 1
             rank = str(number).replace(
@@ -79,7 +86,7 @@ class Economy(commands.Cog):
         await ctx.send(embed = embed)
 
     @commands.command()
-    async def roulette(_, ctx):
+    async def roulette(self, ctx):
         "roulette <amount> <bet>(red, black, green, even, odd, number)"
         amount = int(ctx.message.content.split()[1])
         bettype = ctx.message.content.split()[2]
@@ -94,7 +101,7 @@ class Economy(commands.Cog):
 class Fun(commands.Cog):
     """Fun commands"""
     @commands.command(name="1984")
-    async def _1984(_, ctx):
+    async def _1984(self, ctx):
         "literally 1984"
         await ctx.send("""
         ```
@@ -113,24 +120,24 @@ class Fun(commands.Cog):
             ```""")
 
     @commands.command()
-    async def uwu(_, ctx):
+    async def uwu(self, ctx):
         "owo"
         await ctx.send("owo")
 
     @commands.command()
-    async def fortune(_, ctx):
+    async def fortune(self, ctx):
         "The classic fortune command"
         await ctx.send(get_fortune())
 
     @commands.command()
-    async def r8me(_, ctx):
+    async def r8me(self, ctx):
         "Let Moxie rate you!"
         await ctx.send(rateuser(ctx.message.author.mention))
 
 
 class Internet(commands.Cog):
     @commands.command()
-    async def xkcd(_, ctx):
+    async def xkcd(self, ctx):
         "get a random xkcd"
         data = random_xkcd()
         body =""
@@ -144,7 +151,7 @@ class Internet(commands.Cog):
         await ctx.send(embed = embed)
 
     @commands.command()
-    async def urban(_, ctx):
+    async def urban(self, ctx):
         "search the Urban Dictionary"
         word = ctx.message.content.split()[1]
         data = search_urban(word)
@@ -156,13 +163,13 @@ class Internet(commands.Cog):
         await ctx.send(embed = embed)
 
     @commands.group()
-    async def reddit(_, ctx):
+    async def reddit(self, ctx):
         "Reddit commands"
         if ctx.invoked_subcommand is None:
             await ctx.send("Invalid reddit command")
 
     @reddit.command()
-    async def hot(_, ctx):
+    async def hot(self, ctx):
         "reddit hot <subreddit>"
         posts = await get_links(ctx.message.content.split()[2], 10)
         if len(posts) > 0:
