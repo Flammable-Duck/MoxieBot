@@ -12,21 +12,16 @@ class Economy(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-
-
     @commands.command()
-    async def bal(self, ctx):
+    async def bal(self, ctx, user: discord.Member = None):
         "see a user's coin balance"
-        try:
-            user_uid = int(ctx.message.content.split()[1].replace(
-                "!", "").replace(">", "").replace("<", "").replace("@", ""))
-        except:
-            user_uid = ctx.message.author.id
-        u2_mention = await bot.fetch_user(user_uid)
+        
+        if not user:
+            user = ctx.message.author
 
-        coins = user_bal(user_uid)
 
-        title = str(u2_mention) + "'s Balance:"
+        coins = user_bal(user.id)
+        title = str(user.name) + "'s Balance:"
         body = "**Coins**: ⍟" + str(coins)
 
         embed = discord.Embed(title=title,
@@ -66,7 +61,7 @@ class Economy(commands.Cog):
         for user in search:
             uid = user[0]
             bal = user[1]
-            user_name = await bot.fetch_user(uid)
+            user_name = await self.bot.fetch_user(user_id = uid)
             number += 1
             rank = str(number).replace(
                 "1", ":first_place: ").replace("2", ":second_place: ").replace("3", ":third_place: ").replace("4", ":small_blue_diamond: ").replace("5", ":small_blue_diamond: ")

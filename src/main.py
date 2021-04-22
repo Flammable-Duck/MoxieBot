@@ -9,7 +9,7 @@ print("starting...")
 
 def get_prefix(bot, message):
     """Bot Prefixes."""
-    prefixes = ['$', '&', 'Hey Moxie']
+    prefixes = ['$', '&', 'Hey Moxie ']
     return commands.when_mentioned_or(*prefixes)(bot, message)
 
 
@@ -33,11 +33,10 @@ if __name__ == '__main__':
 async def on_ready():
     """Runs when Bot is ready"""
 
-    print("MoxieBot, © 2021 BubbyRoosh and Flammable Duck")
+    print("\nMoxieBot, © 2021 BubbyRoosh and Flammable Duck")
     print(
-        f'\n\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
+        f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
 
-    # Changes our bots Playing Status. type=1(streaming) for a standard game you could remove type and url.
     await bot.change_presence(activity=discord.Game(name="refactoring :nauseated_face:"))
     print(f'Successfully logged in and booted...!')
 

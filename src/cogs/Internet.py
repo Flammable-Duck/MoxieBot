@@ -28,16 +28,27 @@ class Internet(commands.Cog, name="Internet stuff"):
         await ctx.send(embed = embed)
 
     @commands.command()
-    async def urban(self, ctx):
+    async def urban(self, ctx, *, word: str = None):
         "search the Urban Dictionary"
-        word = ctx.message.content.split()[1]
-        data = search_urban(word)
-        body = data['list'][0]['definition'] + "\n\n" + "*" + data['list'][0]['example'] + "*"
-        embed = discord.Embed(title= word, url=data['list'][0]['permalink'] ,
-                              description=body.replace("[", "").replace("]", ""), color=discord.Color.blue())
-        embed.set_author(name="Urban Dictionary", url="https://urbandictionary.com/",
-                         icon_url="https://g.udimg.com/assets/apple-touch-icon-2ad9dfa3cb34c1d2740aaf1e8bcac791e2e654939e105241f3d3c8b889e4ac0c.png")
-        await ctx.send(embed = embed)
+        if not word:
+            await ctx.send("Usage: urban <search term>")
+        else:
+            data = search_urban(word)
+            try:
+                body = data['list'][0]['definition'] + "\n\n*" + data['list'][0]['example'] + "*"
+
+                embed = discord.Embed(title= word, url=data['list'][0]['permalink'] ,
+                                  description=body.replace("[", "").replace("]", ""), color=discord.Color.blue())
+                embed.set_author(name="Urban Dictionary", url="https://urbandictionary.com/",
+                                 icon_url="https://g.udimg.com/assets/apple-touch-icon-2ad9dfa3cb34c1d2740aaf1e8bcac791e2e654939e105241f3d3c8b889e4ac0c.png")
+                
+            except IndexError:
+                embed = discord.Embed(title=word,
+                                      description="*No results Found*", color=discord.Color.blue())
+                embed.set_author(name="Urban Dictionary", url="https://urbandictionary.com/",
+                                 icon_url="https://g.udimg.com/assets/apple-touch-icon-2ad9dfa3cb34c1d2740aaf1e8bcac791e2e654939e105241f3d3c8b889e4ac0c.png")
+            await ctx.send(embed=embed)
+            
 
     @commands.group()
     async def reddit(self, ctx):

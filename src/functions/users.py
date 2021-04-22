@@ -20,7 +20,7 @@ def add_user(uid):
     "adds a new user to the database"
     conn = sqlite3.connect('data/users.db')
     c = conn.cursor()
-    c.execute("INSERT INTO users VALUES (:uid, 100)", {'uid': uid})
+    c.execute("INSERT INTO users VALUES (:uid, 100, 0)", {'uid': uid})
     conn.commit()
     conn.close()
 
