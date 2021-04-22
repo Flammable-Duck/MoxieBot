@@ -57,11 +57,6 @@ class Economy(commands.Cog):
         await ctx.send(beg_command(ctx.message.author.id))
 
     @commands.command()
-    async def loan(self, ctx):
-        "loan <amount>"
-        give_player_loan(0, 0)
-
-    @commands.command()
     async def rich(self, ctx):
         "see the richest users"
         title = "Richest Users"
