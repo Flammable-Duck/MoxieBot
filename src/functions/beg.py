@@ -1,6 +1,6 @@
 import random, math, sqlite3, time
-from cmds.randline import random_word
-from cmds.users import change_bal
+from functions.randline import random_word
+from functions.users import change_bal
 
 def calc_beg():
     "calculates the amount the amount the user gets when running the beg command. Returns an interger"
