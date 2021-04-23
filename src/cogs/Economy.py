@@ -15,25 +15,28 @@ class Economy(commands.Cog):
     @commands.command()
     async def bal(self, ctx, user: discord.Member = None):
         "see a user's coin balance"
-        
         if not user:
             user = ctx.message.author
-
 
         coins = user_bal(user.id)
         title = str(user.name) + "'s Balance:"
         body = "**Coins**: ⍟" + str(coins)
 
         embed = discord.Embed(title=title,
-                              description=body, color=discord.Color.blue())
+                              description=body,
+                              color=discord.Color.blue())
         await ctx.send(embed=embed)
 
     @commands.command()
     async def give(self, ctx):
         "give <target> <amount>"
         user1_uid = int(ctx.message.author.id)
-        user2_uid = int(ctx.message.content.split()[1].replace(
-            "!", "").replace(">", "").replace("<", "").replace("@", ""))
+        user2_uid = int(ctx.message.content.split()[1]\
+                .replace("!", "")\
+                .replace(">", "")\
+                .replace("<", "")\
+                .replace("@", ""))
+
         amount = int(ctx.message.content.split()[2])
         coin_bal = user_bal(ctx.message.author.id)
         if user1_uid == user2_uid:
@@ -54,6 +57,7 @@ class Economy(commands.Cog):
     @commands.command()
     async def rich(self, ctx):
         "see the richest users"
+        # Why make this title variable.. seems uselesss and takes time (even if small) for the variable to be allocated
         title = "Richest Users"
         search = top_users()
         body = ""
@@ -63,11 +67,20 @@ class Economy(commands.Cog):
             bal = user[1]
             user_name = await self.bot.fetch_user(user_id = uid)
             number += 1
-            rank = str(number).replace(
-                "1", ":first_place: ").replace("2", ":second_place: ").replace("3", ":third_place: ").replace("4", ":small_blue_diamond: ").replace("5", ":small_blue_diamond: ")
+            # Learned this when reading the arg.h macro I showed earlier lmao
+            rank = str(number)\
+                    .replace("1", ":first_place: ")\
+                    .replace("2", ":second_place: ")\
+                    .replace("3", ":third_place: ")\
+                    .replace("4", ":small_blue_diamond: ")\
+                    .replace("5", ":small_blue_diamond: ")
+
             body += rank + "**" + str(bal) + "** - " + str(user_name) + "\n"
+
         embed = discord.Embed(title=title,
-                              description=body, color=discord.Color.blue())
+                              description=body,
+                              color=discord.Color.blue())
+
         await ctx.send(embed=embed)
 
     @commands.command()
