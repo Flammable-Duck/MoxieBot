@@ -1,4 +1,5 @@
 import asyncpraw
+import random
 
 # Yes there are safer ways to do this
 # I just don't care
@@ -15,12 +16,23 @@ class Link:
         self.url = url
         self.title = title
 
-async def get_links(sub, num):
-    "ReTuRnS A LiSt Of ImAgEs FrOm A SeLeCtEd SuBrEdDiT"
+async def get_link(amount, cmd):
     urls = []
-    subreddit = await reddit.subreddit(sub)
-    async for submission in subreddit.hot(limit=num):
+    async for submission in cmd(limit=amount):
         url = submission.url
         if url.endswith(".jpg") or url.endswith(".png"):
             urls.append(Link(url, submission.title))
-    return urls
+    url = None
+    if len(urls) > 0:
+        url = urls[random.randint(0, len(urls))]
+    return url
+
+async def get_hot(sub, amount):
+    "Returns a random 'hot' image in <sub>"
+    subreddit = await reddit.subreddit(sub)
+    return await get_link(amount, subreddit.hot)
+
+async def get_top(sub, amount):
+    "Returns a random 'top' image in <sub>"
+    subreddit = await reddit.subreddit(sub)
+    return await get_link(amount, subreddit.top)

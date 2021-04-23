@@ -9,7 +9,7 @@ class Fun(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        
+
     @commands.command(name="1984")
     async def _1984(self, ctx):
         "literally 1984"
@@ -43,7 +43,6 @@ class Fun(commands.Cog):
     async def r8me(self, ctx):
         "Let Moxie rate you!"
         await ctx.send(rateuser(ctx.message.author.mention))
-
 
 def setup(bot):
     bot.add_cog(Fun(bot))

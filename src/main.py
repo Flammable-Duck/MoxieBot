@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# ^^ Why would you remove that..
+
 import discord
 from discord.ext import commands
 
@@ -28,7 +31,6 @@ if __name__ == '__main__':
             print(f'Failed to load extension {extension}.', file=sys.stderr)
             traceback.print_exc()
 
-    
 @bot.event
 async def on_ready():
     """Runs when Bot is ready"""
