@@ -1,11 +1,23 @@
-#!/usr/bin/env python
-# ^^ Why would you remove that..
+#!/usr/bin/env python3
+"""
+=============================================
+   __     __)                 ______         
+  (, /|  /|            ,     (, /    )       
+    / | / |  _____/       _    /---(  ____/_ 
+ ) /  |/  |_(_)  /(___(__(/_) / ____)(_) (__ 
+(_/   '         /          (_/ (             
+=============================================
+MoxieBot, © 2021 BubbyRoosh and Flammable Duck
 
-import discord
-from discord.ext import commands
+A general purpose Discord bot built with discord.py
+
+"""
 
 import sys
 import traceback
+
+import discord
+from discord.ext import commands
 
 print("starting...")
 
@@ -30,6 +42,7 @@ if __name__ == '__main__':
         except Exception as e:
             print(f'Failed to load extension {extension}.', file=sys.stderr)
             traceback.print_exc()
+
 
 @bot.event
 async def on_ready():

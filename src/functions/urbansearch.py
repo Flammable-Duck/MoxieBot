@@ -1,5 +1,7 @@
-import requests
 import json
+
+import requests
+
 
 def search_urban(word):
     "returns the top definiton of a word at urban dictionary"
@@ -10,11 +12,10 @@ def search_urban(word):
         'x-rapidapi-host': "mashape-community-urban-dictionary.p.rapidapi.com"
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
-    data = json.loads(response.text)
     ###return json.dumps(data, indent=4, sort_keys=True) #pretty JSON, for debugging
     #definition = data['list'][0]['definition'].replace("\n", "")
     #finalstring = "from the Urban Dictionary:\n\n" + "**" +  word + "**" + "\n" + definition + "\n\n" + "*" + data['list'][0]['example'] + "*"
-    return data
+    return json.loads(response.text)
 
 
 #print(search_urban("test"))

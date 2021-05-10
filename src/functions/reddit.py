@@ -1,5 +1,6 @@
-import asyncpraw
 import random
+
+import asyncpraw
 
 # Yes there are safer ways to do this
 # I just don't care
@@ -23,7 +24,7 @@ async def get_link(amount, cmd):
         if url.endswith(".jpg") or url.endswith(".png"):
             urls.append(Link(url, submission.title))
     url = None
-    if len(urls) > 0:
+    if urls:
         url = urls[random.randint(0, len(urls))]
     return url
 

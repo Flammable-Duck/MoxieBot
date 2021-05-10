@@ -1,8 +1,11 @@
+"""
+All misc fun™ commands 
+"""
+import discord
+from discord.ext import commands
 from functions.fortune import get_fortune
 from functions.rateme import rateuser
 
-import discord
-from discord.ext import commands
 
 class Fun(commands.Cog):
     """Fun commands"""
@@ -43,6 +46,7 @@ class Fun(commands.Cog):
     async def r8me(self, ctx):
         "Let Moxie rate you!"
         await ctx.send(rateuser(ctx.message.author.mention))
+
 
 def setup(bot):
     bot.add_cog(Fun(bot))

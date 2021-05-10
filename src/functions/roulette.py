@@ -1,5 +1,5 @@
-from random import randint
 import math
+from random import randint
 
 multiplier = 1
 

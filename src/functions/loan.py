@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import datetime
 
+
 def get_loan_info(uid):
     "Returns the loan info on a player via their user id"
     conn = sqlite3.connect("data/users.db")

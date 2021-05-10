@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def top_users():
     "returns top 5 users, ordered by wealth"
     conn = sqlite3.connect('data/users.db')
@@ -29,8 +30,7 @@ def user_bal(uid):
     if str(search_user(uid)) == "None":
         add_user(uid)
         print("adding new user")
-    bal = search_user(uid)[1]
-    return bal
+    return search_user(uid)[1]
 
 def change_bal(uid, number):
     "add amount to user account"

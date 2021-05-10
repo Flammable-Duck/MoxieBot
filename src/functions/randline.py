@@ -1,6 +1,7 @@
-from random import randint
-import mmap
 import linecache
+import mmap
+from random import randint
+
 
 def mapcount(filename):
     "this returns the number of lines in a file"
@@ -15,5 +16,4 @@ def mapcount(filename):
 def random_word(filename):
     "this will return a random word from a file, except the first line"
     line = randint(2,mapcount(filename))
-    word = linecache.getline(filename, line).replace("\n", "")
-    return word
+    return linecache.getline(filename, line).replace("\n", "")

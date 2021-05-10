@@ -1,10 +1,13 @@
-from functions.users import user_bal, change_bal, top_users
-from functions.roulette import play_roulette
-from functions.loan import give_player_loan
-from functions.beg import beg_command
-
+"""
+All economy related commands.
+"""
 import discord
 from discord.ext import commands
+from functions.beg import beg_command
+from functions.loan import give_player_loan
+from functions.roulette import play_roulette
+from functions.users import change_bal, top_users, user_bal
+
 
 class Economy(commands.Cog):
     """Economy commands"""
@@ -31,11 +34,11 @@ class Economy(commands.Cog):
     async def give(self, ctx):
         "give <target> <amount>"
         user1_uid = int(ctx.message.author.id)
-        user2_uid = int(ctx.message.content.split()[1]\
-                .replace("!", "")\
-                .replace(">", "")\
-                .replace("<", "")\
-                .replace("@", ""))
+        user2_uid = int(ctx.message.content.split()[1]
+                        .replace("!", "")
+                        .replace(">", "")
+                        .replace("<", "")
+                        .replace("@", ""))
 
         amount = int(ctx.message.content.split()[2])
         coin_bal = user_bal(ctx.message.author.id)
@@ -65,15 +68,15 @@ class Economy(commands.Cog):
         for user in search:
             uid = user[0]
             bal = user[1]
-            user_name = await self.bot.fetch_user(user_id = uid)
+            user_name = await self.bot.fetch_user(user_id=uid)
             number += 1
             # Learned this when reading the arg.h macro I showed earlier lmao
             rank = str(number)\
-                    .replace("1", ":first_place: ")\
-                    .replace("2", ":second_place: ")\
-                    .replace("3", ":third_place: ")\
-                    .replace("4", ":small_blue_diamond: ")\
-                    .replace("5", ":small_blue_diamond: ")
+                .replace("1", ":first_place: ")\
+                .replace("2", ":second_place: ")\
+                .replace("3", ":third_place: ")\
+                .replace("4", ":small_blue_diamond: ")\
+                .replace("5", ":small_blue_diamond: ")
 
             body += rank + "**" + str(bal) + "** - " + str(user_name) + "\n"
 
