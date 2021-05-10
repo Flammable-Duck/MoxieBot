@@ -8,15 +8,19 @@ from functions.urbansearch import search_urban
 from functions.xkcd import random_xkcd
 
 
-class Internet(commands.Cog, name="Internet stuff"):
-    "API's are cool!"
-
+class Internet(commands.Cog, name="Internet"):
+    """
+    Internet commands
+    """
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
     async def xkcd(self, ctx):
-        "get a random xkcd"
+        """
+        get a random xkcd
+        $xkcd
+        """
         data = random_xkcd()
         url = "https://xkcd.com/" + str(data['num']) + "/"
         embed = discord.Embed(title=data["title"],
@@ -34,7 +38,10 @@ class Internet(commands.Cog, name="Internet stuff"):
 
     @commands.command()
     async def urban(self, ctx, *, word: str = None):
-        "search the Urban Dictionary"
+        """
+        search the urban dictionary
+        $urban <serch term>
+        """
         if not word:
             await ctx.send("Usage: urban <search term>")
         else:
@@ -56,7 +63,7 @@ class Internet(commands.Cog, name="Internet stuff"):
 
     @commands.group()
     async def reddit(self, ctx):
-        "Reddit commands"
+        "view Reddit posts by subreddit"
         if ctx.invoked_subcommand is None:
             await ctx.send("Invalid reddit command")
 

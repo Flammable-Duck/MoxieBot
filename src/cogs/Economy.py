@@ -32,7 +32,10 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def give(self, ctx):
-        "give <target> <amount>"
+        """
+        give a user coins
+        give <target> <amount>
+        """
         user1_uid = int(ctx.message.author.id)
         user2_uid = int(ctx.message.content.split()[1]
                         .replace("!", "")
@@ -59,7 +62,10 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def rich(self, ctx):
-        "see the richest users"
+        """
+        see the richest users
+        $rich
+        """
         # Why make this title variable.. seems uselesss and takes time (even if small) for the variable to be allocated
         title = "Richest Users"
         search = top_users()
@@ -88,7 +94,19 @@ class Economy(commands.Cog):
 
     @commands.command()
     async def roulette(self, ctx):
-        "roulette <amount> <bet>(red, black, green, even, odd, number)"
+        """
+        play roulette
+        $roulette <amount> <bet>
+        amount: The amount you wish to bet
+        bet: the bet you wish to make
+        bet options:
+            red
+            black
+            green
+            even
+            odd
+            or a specific number (1-36)
+        """
         amount = int(ctx.message.content.split()[1])
         bettype = ctx.message.content.split()[2]
         coin_bal = user_bal(ctx.message.author.id)

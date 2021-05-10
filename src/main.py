@@ -33,7 +33,8 @@ bot = commands.Bot(command_prefix=get_prefix,
 
 initial_extensions = ['cogs.Economy',
                       'cogs.Fun',
-                      'cogs.Internet']
+                      'cogs.Internet',
+                      'cogs.Moderation']
 
 if __name__ == '__main__':
     for extension in initial_extensions:
@@ -53,7 +54,7 @@ async def on_ready():
         f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
 
     await bot.change_presence(activity=discord.Game(name="refactoring :nauseated_face:"))
-    print(f'Successfully logged in and booted...!')
+    print('Successfully logged in and booted...!')
 
 bot.run("ODI5NTkxNTcwNzU1NDg1NzE2.YG6XWw.a5jFzhjcoK8XCWaOUJsVI3PQKsg",
         bot=True, reconnect=True)

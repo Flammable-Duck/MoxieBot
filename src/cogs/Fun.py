@@ -8,7 +8,9 @@ from functions.rateme import rateuser
 
 
 class Fun(commands.Cog):
-    """Fun commands"""
+    """
+    Fun™ commands
+    """
 
     def __init__(self, bot):
         self.bot = bot
