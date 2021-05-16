@@ -53,7 +53,7 @@ async def on_ready():
     print(
         f'\nLogged in as: {bot.user.name} - {bot.user.id}\nVersion: {discord.__version__}\n')
 
-    await bot.change_presence(activity=discord.Game(name="refactoring :nauseated_face:"))
+    await bot.change_presence(activity=discord.Game(name="Moxie Bot!!"))
     print('Successfully logged in and booted...!')
 
 bot.run("TOLKEN HERE",
