@@ -56,5 +56,5 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name="refactoring :nauseated_face:"))
     print('Successfully logged in and booted...!')
 
-bot.run("ODI5NTkxNTcwNzU1NDg1NzE2.YG6XWw.a5jFzhjcoK8XCWaOUJsVI3PQKsg",
+bot.run("TOLKEN HERE",
         bot=True, reconnect=True)

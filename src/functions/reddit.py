@@ -6,7 +6,7 @@ import asyncpraw
 # I just don't care
 reddit = asyncpraw.Reddit(
     client_id="YXLgxDx5qtQD0Q",
-    client_secret="SJEa9_F65OOs4s3b8eDQgoCs-ggAOg",
+    client_secret="TOLKEN HERE",
     user_agent="python:Moxie Bot:v0.1.0 by u/BubbyRoosh and u/wf6er6"
 )
 
