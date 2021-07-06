@@ -1,23 +1,16 @@
 #!/usr/bin/env python3
-"""
-=============================================
-   __     __)                 ______         
-  (, /|  /|            ,     (, /    )       
-    / | / |  _____/       _    /---(  ____/_ 
- ) /  |/  |_(_)  /(___(__(/_) / ____)(_) (__ 
-(_/   '         /          (_/ (             
-=============================================
-MoxieBot, © 2021 BubbyRoosh and Flammable Duck
 
-A general purpose Discord bot built with discord.py
-
-"""
-
+import os
 import sys
 import traceback
 
+from dotenv import load_dotenv
+
 import discord
 from discord.ext import commands
+
+load_dotenv()
+TOLKEN = os.environ.get("TOLKEN")
 
 print("starting...")
 
@@ -56,5 +49,5 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Moxie Bot!!"))
     print('Successfully logged in and booted...!')
 
-bot.run("TOLKEN HERE",
+bot.run(TOLKEN,
         bot=True, reconnect=True)
